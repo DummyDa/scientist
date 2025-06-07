@@ -31,6 +31,16 @@ def forms():
             return "Ошибка"
     return render_template("form.html")
 
+@app.route("/")
+def scientists():
+    Scientists = []
+    with conn.cursor() as cur:
+        cur.execute("SELECT * FROM scientists")
+        rows = cur.fetchall()
+        for row in rows:
+            Scientists.append(f'{row[1]} - {row[2]}')
+        return render_template("index.html", data=Scientists)
+
 def main():
     app.run(debug=True)
 
